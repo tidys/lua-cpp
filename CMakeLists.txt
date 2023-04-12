@@ -15,3 +15,6 @@ list(APPEND app_src ./src/main.cpp)
 
 source_group(TREE ${CMAKE_CURRENT_LIST_DIR}/src FILES ${app_src})
 add_executable(${app} ${app_src})
+
+# 设置工作目录为lua脚本所在目录
+set_target_properties(${app} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/scripts")
