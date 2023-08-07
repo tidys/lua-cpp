@@ -13,7 +13,7 @@ bool loadLuaFile(lua_State *L, const char *file)
     int ret = luaL_loadfile(L, file);
     if (ret)
     {
-        cout << "load lua2cpp.lua failed" << endl;
+        cout << "load " << file << " failed" << endl;
         return false;
     }
     ret = lua_pcall(L, 0, 0, 0);
@@ -227,7 +227,14 @@ void test5()
     luaL_dofile(L, "test.lua");
     lua_close(L);
 }
-
+void testLoadCLib()
+{
+    LUA_VERSION;
+    lua_State* L = luaL_newstate();
+    luaL_openlibs(L);
+    loadLuaFile(L, "loadCLib.lua");
+    lua_close(L);
+}
 void testHook()
 {
     lua_State *L = luaL_newstate();

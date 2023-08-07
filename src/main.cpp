@@ -17,7 +17,8 @@ int main()
     // luaCallCpp();
     // luaCallCppFunctionReutnTable();
     // test4();
-     test5();
+    // test5();
+     testLoadCLib();
     //testHook();
     system("pause");
     return 0;
