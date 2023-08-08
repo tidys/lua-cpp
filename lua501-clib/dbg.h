@@ -8,4 +8,4 @@
  */
 static int test(lua_State *L);
  
-int luaopen_myLib(lua_State *L);
+int luaopen_dbg(lua_State *L);

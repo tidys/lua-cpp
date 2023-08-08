@@ -4,4 +4,4 @@ add_library(${lib} SHARED
     ${CMAKE_CURRENT_LIST_DIR}/dbg.h
     ${CMAKE_CURRENT_LIST_DIR}/dbg.c
 )
-target_link_libraries(${lib} PUBLIC lua)
+target_link_libraries(${lib} PUBLIC ${LuaLib})
