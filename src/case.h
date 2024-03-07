@@ -50,7 +50,7 @@ void test1()
 
 void cppCallLuaTable()
 {
-    lua_State *L = luaL_newstate();
+    lua_State* L = luaL_newstate();
     luaL_dofile(L, "cppCallLuaTable.lua");
 
     lua_getglobal(L, "tbl"); // len=1
@@ -61,7 +61,7 @@ void cppCallLuaTable()
         cout << "tbl.name=" << luaL_checkstring(L, -1) << endl;
     }
 
-    if (false)
+    if (true)
     {
         lua_pushstring(L, "11");   // 这个是干扰项，len=2
         lua_pushstring(L, "name"); // len=3
@@ -71,7 +71,7 @@ void cppCallLuaTable()
 
         cout << lua_tostring(L, -1);
     }
-    {
+    if (false){
         lua_rawgeti(L, -1, 1);
         cout << "tbl[1]=" << lua_tointeger(L, -1) << endl;
         lua_pop(L, 1);
@@ -87,6 +87,7 @@ void cppCallLuaTable()
 
     lua_close(L);
 }
+
 void cppCallLuaFunction()
 {
     lua_State *L = luaL_newstate();
@@ -109,19 +110,23 @@ void cppCallLuaVar()
 {
     lua_State *L = luaL_newstate();
     luaL_dofile(L, "cppCallLuaVar.lua");
-    //{
-    //    // 读取全局变量，并将其放入栈顶
-    //    lua_getglobal(L, "str");
-    //    // 从栈顶取出字符串数据
-    //    cout << "str=" << luaL_checkstring(L,-1)  << endl;
-    //    lua_getglobal(L, "int");
-    //    cout << "int=" << luaL_checkinteger(L, -1) << endl;
-
-    //    cout << "len=" << lua_gettop(L) << endl;
-    //}
-    {
+    if (true)   {
+        // 读取全局变量，并将其放入栈顶
         lua_getglobal(L, "str");
+        // 从栈顶取出字符串数据
+        cout << "str=" << luaL_checkstring(L, -1) << endl;
         lua_getglobal(L, "int");
+        cout << "int=" << luaL_checkinteger(L, -1) << endl;
+
+        cout << "len=" << lua_gettop(L) << endl;
+    }
+    else
+    {
+        cout << "len=" << lua_gettop(L) << endl;
+        lua_getglobal(L, "str");
+        cout << "len=" << lua_gettop(L) << endl;
+        lua_getglobal(L, "int");
+        cout << "len=" << lua_gettop(L) << endl;
         cout << "str=" << luaL_checkstring(L, 1) << endl;
         cout << "int=" << luaL_checkinteger(L, 2) << endl;
     }
@@ -167,17 +172,44 @@ int print(lua_State *L)
     }
     return 0;
 }
+void testRunEncodeLuaFile()
+{
+    lua_State* L = luaL_newstate();
+    luaopen_base(L);
+    luaL_openlibs(L);
+    //lua_register(L, "print", print);
+    int a = luaL_dofile(L, "test-encode.lua");
+    lua_close(L);
+}
 int returnTable(lua_State *L)
 {
     cout << "len=" << lua_gettop(L) << endl;
     lua_newtable(L);
     cout << "len=" << lua_gettop(L) << endl;
+    
+    lua_pushstring(L, "100cm");
+    lua_pushstring(L, "200cm"); // 只会使用这个值
+    cout << "len=" << lua_gettop(L) << endl;
+    lua_setfield(L, -3, "height");
+    lua_pop(L,1); // 把100cm pop出去
+    cout << "len=" << lua_gettop(L) << endl;
+
+
     lua_pushstring(L, "age");
     cout << "len=" << lua_gettop(L) << endl;
     lua_pushstring(L, "120");
     cout << "len=" << lua_gettop(L) << endl;
     lua_rawset(L, -3);
     cout << "len=" << lua_gettop(L) << endl;
+
+
+    lua_pushstring(L, "name");
+    cout << "len=" << lua_gettop(L) << endl;
+    lua_pushstring(L, "test");
+    cout << "len=" << lua_gettop(L) << endl;
+    lua_rawset(L, -3);
+    cout << "len=" << lua_gettop(L) << endl;
+
     return 1;
 }
 
@@ -191,7 +223,14 @@ void luaCallCppFunctionReutnTable()
 
     lua_close(L);
 }
-
+void luaCoroutine()
+{
+    lua_State* L = luaL_newstate();
+    luaopen_base(L);
+    luaL_openlibs(L);
+    loadLuaFile(L, "luaCoroutine.lua");
+    lua_close(L);
+}
 void luaCallCpp()
 {
     lua_State *L = luaL_newstate();

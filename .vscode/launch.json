@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "lua",
+            "type": "LuaHelper-Debug",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/lua2cpp_table.lua",
+            "program": "${workspaceFolder}/src/scripts/test-encode.lua",
             "stopOnEntry": false
         }
     ]

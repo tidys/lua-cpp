@@ -9,16 +9,18 @@ extern "C"
 #include "case.h"
 int main()
 {
-    // test1();
-    // cppCallLuaVar();
-    // cppCallLuaTable();
+    testRunEncodeLuaFile();
+     //test1();
+     //cppCallLuaVar();
+     //cppCallLuaTable();
 
     // cppCallLuaFunction();
-    // luaCallCpp();
-    // luaCallCppFunctionReutnTable();
+     //luaCallCpp();
+     //luaCallCppFunctionReutnTable();
+    //luaCoroutine();
     // test4();
     // test5();
-     testLoadCLib();
+     //testLoadCLib();
     //testHook();
     system("pause");
     return 0;
